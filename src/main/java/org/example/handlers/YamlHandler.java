@@ -49,6 +49,7 @@ public class YamlHandler implements FileImportExportHandler {
         if (!supports(file)) {
             if (nextHandler != null) {
                 nextHandler.exportData(monsters, file);
+                return;
             } else {
                 throw new Exception("Unsupported format");
             }

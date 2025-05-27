@@ -33,8 +33,10 @@ public class JsonHandler implements FileImportExportHandler {
         if (!supports(file)) {
             if (nextHandler != null) {
                 nextHandler.exportData(monsters, file);
+                return;
+            } else {
+                throw new Exception("Unsupported format");
             }
-            throw new Exception("Unsupported format");
         }
         ObjectMapper mapper = new ObjectMapper();
         Bestiary bestiary = new Bestiary();
