@@ -96,9 +96,9 @@ public class MonstrGUI extends JFrame {
         if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             try {
                 File file = fileChooser.getSelectedFile();
-                List<Monstr> imported = fileHandlerChain.importData(file);
+                monsters = fileHandlerChain.importData(file);
 
-                System.out.println("Monstr imported: " + imported);
+                System.out.println("Monstr imported: " + monsters);
 
                 DefaultMutableTreeNode targetNode =
                         switch (file.getName().split("\\.")[1].toLowerCase()) {
@@ -111,7 +111,7 @@ public class MonstrGUI extends JFrame {
                 xmlNode.removeAllChildren();
                 jsonNode.removeAllChildren();
 
-                imported.forEach(m -> targetNode.add(new DefaultMutableTreeNode(m)));
+                monsters.forEach(m -> targetNode.add(new DefaultMutableTreeNode(m)));
 
                 updateTree();
             } catch (Exception ex) {
