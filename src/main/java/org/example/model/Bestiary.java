@@ -1,19 +1,18 @@
 package org.example.model;
 
-import org.example.model.Monstr;
-
 import java.util.List;
 
 public class Bestiary {
-    private List<Monstr> creatures;
+    private List<Monstr> bestiary;
 
-    public List<Monstr> getCreatures() {
-        return creatures;
+    public List<Monstr> getBestiary() {
+        return bestiary;
     }
 
-    public void setCreatures(List<Monstr> creatures) {
-        this.creatures = creatures;
+    public void setBestiary(List<Monstr> bestiary) {
+        this.bestiary = bestiary;
     }
 }
+
 
 

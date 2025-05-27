@@ -20,6 +20,11 @@ public class XmlHandler implements FileImportExportHandler {
 
     @Override
     public List<Monstr> importData(File file) throws Exception {
+        if (!supports(file)) {
+            if (nextHandler != null) return nextHandler.importData(file);
+            throw new Exception("Unsupported format");
+        }
+
         List<Monstr> monsters = new ArrayList<>();
         XMLInputFactory factory = XMLInputFactory.newInstance();
         XMLStreamReader reader = factory.createXMLStreamReader(new FileReader(file));
@@ -78,6 +83,13 @@ public class XmlHandler implements FileImportExportHandler {
 
     @Override
     public void exportData(List<Monstr> monsters, File file) throws Exception {
+        if (!supports(file)) {
+            if (nextHandler != null) {
+                nextHandler.exportData(monsters, file);
+            } else {
+                throw new Exception("Unsupported format");
+            }
+        }
         XMLOutputFactory factory = XMLOutputFactory.newInstance();
         XMLStreamWriter writer = factory.createXMLStreamWriter(new FileWriter(file));
 

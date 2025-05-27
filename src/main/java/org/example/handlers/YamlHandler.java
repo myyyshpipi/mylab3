@@ -40,14 +40,22 @@ public class YamlHandler implements FileImportExportHandler {
         try (FileInputStream input = new FileInputStream(file);
             InputStreamReader reader = new InputStreamReader(input, StandardCharsets.UTF_8)) {
                 Bestiary bestiary = yaml.load(reader);
-                return bestiary.getCreatures();
+                return bestiary.getBestiary();
         }
     }
 
     @Override
     public void exportData(List<Monstr> monsters, File file) throws Exception {
+        if (!supports(file)) {
+            if (nextHandler != null) {
+                nextHandler.exportData(monsters, file);
+            } else {
+                throw new Exception("Unsupported format");
+            }
+        }
+
         Bestiary bestiary = new Bestiary();
-        bestiary.setCreatures(monsters);
+        bestiary.setBestiary(monsters);
 
         DumperOptions options = new DumperOptions();
         options.setIndent(2);

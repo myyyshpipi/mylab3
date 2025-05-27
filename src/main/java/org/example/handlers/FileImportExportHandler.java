@@ -13,4 +13,5 @@ public interface FileImportExportHandler {
     void exportData(List<Monstr> monsters, File file) throws Exception;
 
     void setNextHandler(FileImportExportHandler nextHandler);
+
 }

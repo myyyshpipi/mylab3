@@ -1,8 +1,5 @@
 package org.example.model;
 
-// Классы данных (используйте Lombok @Data для геттеров/сеттеров)
-// -------------------------------------------
-
 public class Monstr {
     private String name;
     private String full_info;
@@ -13,7 +10,7 @@ public class Monstr {
     private Potion potion;
     private String physical_characteristics;
     private String additional_info;
-    private String sourceType;
+    //private String sourceType;
 
     // Геттеры и сеттеры для всех полей
     public String getName() {
@@ -88,16 +85,17 @@ public class Monstr {
         this.additional_info = additional_info;
     }
 
-    public String getSourceType() {
-        return sourceType;
-    }
+//    public String getSourceType() {
+//        return sourceType;
+//    }
 
-    public void setSourceType(String sourceType) {
-        this.sourceType = sourceType;
-    }
+//    public void setSourceType(String sourceType) {
+//        this.sourceType = sourceType;
+//    }
 
     @Override
     public String toString() {
-        return name + " (" + sourceType + ")";
+        //return name + " (" + sourceType + ")";
+        return name;
     }
 }

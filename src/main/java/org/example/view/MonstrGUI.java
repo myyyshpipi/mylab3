@@ -33,6 +33,7 @@ public class MonstrGUI extends JFrame {
         initMonstGUI();
     }
 
+    // Контроллер
     // Настройка цепочки обработчиков
     private void setupHandlers() {
         YamlHandler yamlHandler = new YamlHandler();
@@ -46,7 +47,7 @@ public class MonstrGUI extends JFrame {
 
     // Инициализация главного экрана
     private void initMonstGUI() {
-        setTitle("База Чудовищ");
+        setTitle("Bestiarum");
         setSize(800, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -83,10 +84,12 @@ public class MonstrGUI extends JFrame {
         //tree.addTreeSelectionListener(e -> showDetails());
         tree.addTreeSelectionListener(e -> showDetailsNew());
 
+
         add(new JScrollPane(tree), BorderLayout.CENTER);
         setVisible(true);
     }
 
+    // Контроллер
     // Функция меню для импорта чудовищь
     private void importData() {
         JFileChooser fileChooser = new JFileChooser( new File("./data/") );
@@ -94,16 +97,22 @@ public class MonstrGUI extends JFrame {
             try {
                 File file = fileChooser.getSelectedFile();
                 List<Monstr> imported = fileHandlerChain.importData(file);
-                DefaultMutableTreeNode targetNode = switch (file.getName().split("\\.")[1].toLowerCase()) {
-                    case "yaml" -> yamlNode;
-                    case "xml" -> xmlNode;
-                    case "json" -> jsonNode;
-                    default -> rootNode;
-                };
+
+                System.out.println("Monstr imported: " + imported);
+
+                DefaultMutableTreeNode targetNode =
+                        switch (file.getName().split("\\.")[1].toLowerCase()) {
+                            case "yaml" -> yamlNode;
+                            case "xml" -> xmlNode;
+                            case "json" -> jsonNode;
+                            default -> rootNode;
+                        };
                 yamlNode.removeAllChildren();
                 xmlNode.removeAllChildren();
                 jsonNode.removeAllChildren();
+
                 imported.forEach(m -> targetNode.add(new DefaultMutableTreeNode(m)));
+
                 updateTree();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
@@ -112,6 +121,7 @@ public class MonstrGUI extends JFrame {
         }
     }
 
+    // Контроллер
     // Функция меню для экспорта чудовищь
     private void exportData() {
         JFileChooser fileChooser = new JFileChooser( new File("./data/") );
@@ -127,19 +137,19 @@ public class MonstrGUI extends JFrame {
         }
     }
 
-    // Простое отображение деталей о чудовище
-    private void showDetails() {
-        DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
-        if (node == null || node.isRoot()) return;
-
-        Monstr selected = (Monstr) node.getUserObject();
-        JDialog dialog = new JDialog(this, "Details: " + selected.getName(), true);
-        JTextArea textArea = new JTextArea(selected.toString());
-        textArea.setEditable(false);
-        dialog.add(new JScrollPane(textArea));
-        dialog.setBounds(600,200,600, 600);
-        dialog.setVisible(true);
-    }
+//    // Простое отображение деталей о чудовище
+//    private void showDetails() {
+//        DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+//        if (node == null || node.isRoot()) return;
+//
+//        Monstr selected = (Monstr) node.getUserObject();
+//        JDialog dialog = new JDialog(this, "Details: " + selected.getName(), true);
+//        JTextArea textArea = new JTextArea(selected.toString());
+//        textArea.setEditable(false);
+//        dialog.add(new JScrollPane(textArea));
+//        dialog.setBounds(600,200,600, 600);
+//        dialog.setVisible(true);
+//    }
 
     private void showDetailsNew() {
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
